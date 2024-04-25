@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/changes.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: #E6F9E6;">
+
+<div class="text-center" style="color: green; font-size: 24px; font-weight: bold;">UnShipped Orders</div>
+<div class="container-fluid">
+    <div class="table-responsive">
+        <table id="ordersTable" class="table table-hover table-sm">
+            <thead style="background-color: #700fb7; color: white; font-size: 16px;">
+                <tr>
+                    <th>TransactionId</th>
+                    <th>ProductId</th>
+                    <th>User Email Id</th>
+                    <th>Address</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody style="background-color: white;">
+                <!-- Dummy Data -->
+                <tr>
+                    <td>1</td>
+                    <td><a href="./updateProduct.jsp?prodid=101">101</a></td>
+                    <td>user1@example.com</td>
+                    <td>123 Street, City</td>
+                    <td>2</td>
+                    <td>READY_TO_SHIP</td>
+                    <td><a href="ShipmentServlet?orderid=1&amount=50&userid=user1&prodid=101" class="btn btn-success">SHIP NOW</a></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td><a href="./updateProduct.jsp?prodid=102">102</a></td>
+                    <td>user2@example.com</td>
+                    <td>456 Street, City</td>
+                    <td>1</td>
+                    <td>READY_TO_SHIP</td>
+                    <td><a href="ShipmentServlet?orderid=2&amount=30&userid=user2&prodid=102" class="btn btn-success">SHIP NOW</a></td>
+                </tr>
+                <!-- End of Dummy Data -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

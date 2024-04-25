@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Remove Product</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="css/changes.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: rgb(230,255,255);">
+
+<jsp:include page="header.jsp" />
+
+<div class="container">
+    <div class="row"
+        style="margin-top: 50px; margin-left: 2px; margin-right: 2px;">
+        <form id="removeProductForm" class="col-md-4 col-md-offset-4"
+            style="border: 2px solid black; border-radius: 10px; background-color: #FFE5CC; padding: 10px;">
+            <div style="font-weight: bold;" class="text-center">
+                <h3 style="color: black; font-weight: bold ;">Product Deletion Form</h3>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label for="productId">Product Id</label> <input type="text"
+                        placeholder="Enter Product Id" name="prodid" class="form-control"
+                        id="productId" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 text-center" style="margin-bottom: 2px;">
+                    <a href="adminViewProduct.jsp" class="btn btn-info">Cancel</a>
+                </div>
+                <div class="col-md-6 text-center">
+                    <button type="submit" class="btn btn-danger">Remove Product</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+   <!-- flask  changes chatgpt -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#removeProductForm').submit(function(e) {
+            e.preventDefault();
+            var productId = $('#productId').val();
+
+            // AJAX request to remove product
+            $.ajax({
+                url: 'RemoveProductSrv',
+                type: 'POST',
+                data: { prodid: productId },
+                success: function(response) {
+                    // Redirect to adminViewProduct.jsp with a success message
+                    window.location.href = 'adminViewProduct.jsp?message=' + encodeURIComponent(response);
+                },
+                error: function(xhr, status, error) {
+                    // Display error message
+                    console.error(error);
+                    alert('Error: Failed to remove product.');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Credit Card Payments</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/changes.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Form submission handling
+            $('#paymentForm').submit(function(e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+
+                // AJAX request to handle form submission
+                $.ajax({
+                    url: '/payment_credit',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        alert("success"); // Display success message or handle redirection
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        alert('Error: Payment failed.'); // Display error message
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body style="background-image: url(/static/images/Payment.jpg);">
+    <div class="container">
+        <div class="row">
+            <form id="paymentForm" method="post" class="col-md-6 col-md-offset-3" style=" margin-top : 8%; border-radius: 20px; background-color: #FFE5CC;; padding: 10px; opacity: 0.9;">
+                <div style="font-weight: bold;" class="text-center">
+                    <div class="form-group">
+                        <img src="/static/images/2.jpg" alt="Payment Proceed" height="100px" />
+                        <h2 style="color: black ; font-weight: bold;">Credit Card Payment</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label for="cardholder">Name of Card Holder</label>
+                        <input type="text" placeholder="Enter Card Holder Name" name="cardholder" class="form-control" id="cardholder" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label for="cardnumber">Enter Credit Card Number</label>
+                        <input type="number" placeholder="4242-4242-4242-4242" name="cardnumber" class="form-control" id="cardnumber" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="expmonth">Expiry Month</label>
+                        <input type="number" placeholder="MM" name="expmonth" class="form-control" size="2" max="12" min="00" id="expmonth" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="expyear">Expiry Year</label>
+                        <input type="number" placeholder="YYYY" class="form-control" size="4" id="expyear" name="expyear" required>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-6 form-group">
+                        <label for="cvv">Enter CVV</label>
+                        <input type="number" placeholder="123" class="form-control" size="3" id="cvv" name="cvv" required>
+                        <input type="hidden" name="amount">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>&nbsp;</label>
+                        <button type="submit" class="form-control btn btn-success" style="border-radius: 25px;">
+                            Pay
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+   
+</body>
+</html>

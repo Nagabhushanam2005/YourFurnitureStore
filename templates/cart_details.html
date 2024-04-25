@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Details</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body style="background-color: rgb(230,230,255);">
+
+    <div class="text-center" style="color: black; font-size: 24px; font-weight: bold; margin-top: 6%;">Cart Items</div>
+
+    <div class="container" style="margin-top: 20px; text-align: center;">
+        <table class="table table-hover" id="cartTable">
+            <thead style="background-color: #222831; color: white; font-size: 16px; font-weight: bold;">
+                <tr>
+                    <th>Picture</th>
+                    <th>Products</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Add</th>
+                    <th>Remove</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody style="background-color: white; font-size: 15px; font-weight: bold;">
+                <!-- Cart items will be dynamically added here -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6" style="text-align: right; font-weight: bold;">Total:</td>
+                    <td id="totalAmount">0.00</td>
+                </tr>
+            </tfoot>
+        </table>
+
+        <!-- Checkout Button -->
+        <div class="text-right">
+            <button class="btn btn-primary" id="checkoutBtn" style="background-color: #4CCD99; border-radius: 30px;">Checkout</button>
+        </div>
+    </div>
+
+    <footer>
+        <!-- Your footer content here -->
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var cartItems = []; // Initialize the cart items array
+
+            // Fetch products from Flask
+            var values = JSON.parse('{{ values | tojson | safe}}');
+            var val_len = values.length;
+
+            for (var i = 0; i < val_len; i++) {
+                cartItems.push({
+                    productId: values[i][0],
+                    productName: values[i][1],
+                    productPrice: values[i][2],
+                    quantity: values[i][3],
+                });
+            }
+
+            // Function to populate the cart table
+            function populateCartTable() {
+                var totalAmount = 0;
+                $('#cartTable tbody').empty(); // Clear existing rows
+
+                // Iterate through cart items and append rows to the table
+                cartItems.forEach(function (item) {
+                    var row = '<tr>' +
+                        '<td>' + item.productName + '</td>' +
+                        '<td>' + item.productPrice.toFixed(2) + '</td>' +
+                        '<td>' +
+                        '<input type="number" class="quantityInput" value="' + item.quantity + '" style="max-width: 70px;" min="0">' +
+                        '</td>' +
+                        '<td><button class="addBtn" data-productid="' + item.productId + '">+</button></td>' +
+                        '<td><button class="removeBtn" data-productid="' + item.productId + '">-</button></td>' +
+                        '<td class="amountCell">' + (item.quantity * item.productPrice).toFixed(2) + '</td>' +
+                        '</tr>';
+                    $('#cartTable tbody').append(row);
+                    totalAmount += item.quantity * item.productPrice;
+                });
+
+                // Update total amount in the cart
+                $('#totalAmount').text(totalAmount.toFixed(2));
+            }
+
+            // Initial population of cart table
+            populateCartTable();
+
+            // Event listener for adding items
+            $('#cartTable').on('click', '.addBtn', function () {
+                var productId = $(this).data('productid');
+                var cartItem = cartItems.find(item => item.productId === productId);
+                if (cartItem) {
+                    cartItem.quantity++;
+                    populateCartTable();
+                }
+            });
+
+            // Event listener for removing items
+            $('#cartTable').on('click', '.removeBtn', function () {
+                var productId = $(this).data('productid');
+                var cartItem = cartItems.find(item => item.productId === productId);
+                if (cartItem && cartItem.quantity > 0) {
+                    cartItem.quantity--;
+                    populateCartTable();
+                }
+            });
+
+            // Event listener for changing quantity directly
+            $('#cartTable').on('change', '.quantityInput', function () {
+                var productId = $(this).closest('tr').find('.addBtn').data('productid');
+                var newQuantity = parseInt($(this).val());
+                var cartItem = cartItems.find(item => item.productId === productId);
+                if (cartItem && !isNaN(newQuantity) && newQuantity >= 0) {
+                    cartItem.quantity = newQuantity;
+                    populateCartTable();
+                }
+            });
+
+            
+            $('#checkoutBtn').on('click', function () {
+                window.location.href = 'check_out';
+            });
+        });
+    </script>
+</body>
+
+</html>

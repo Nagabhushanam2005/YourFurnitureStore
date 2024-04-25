@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/changes.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#registerForm').submit(function(e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+
+                // AJAX request to handle form submission
+                $.ajax({
+                    url: '/register',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        alert(response); // Display success message or handle redirection
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                        alert('Error: Registration failed.'); // Display error message
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body style="background-image: url(/static/images/Registration.jpg); background-size: cover;">
+    <div class="container">
+        <div class="row">
+            <form id="registerForm" method="post" class="col-md-6 col-md-offset-3" style=" margin-top: 50px; border-radius: 10px; background-color: black; padding: 30px; margin-top: 10%; opacity: 0.6;">
+                <div style="font-weight: bold;" class="text-center">
+                    <h2 style="color: white; font-weight: bold; ">Registration Form</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="name" style="color: white;">Name</label>
+                        <input type="text" name="username" class="form-control" id="name" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="email" style="color: white;">Email</label>
+                        <input type="email" name="email" class="form-control" id="email" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="address" style="color: white;">Address</label>
+                    <textarea name="address" class="form-control" id="address" required></textarea>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="mobile" style="color: white;">Mobile</label>
+                        <input type="number" name="mobile" class="form-control" id="mobile" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="pincode" style="color: white;">Pin Code</label>
+                        <input type="number" name="pincode" class="form-control" id="pincode" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="password" style="color: white;">Password</label>
+                        <input type="password" name="password" class="form-control" id="password" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="confirmPassword" style="color: white;">Confirm Password</label>
+                        <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" required>
+                    </div>
+                </div>
+                <div class="row text-center">
+                    <div class="col-md-6" style="margin-bottom: 2px;">
+                        <button type="reset" class="btn btn-danger" style="border-radius: 25px; font-weight: bold;">Reset</button>
+                    </div>
+                    <div class="col-md-6">
+                        <button type="submit" href="/home" class="btn btn-success" style="border-radius: 25px; font-weight: bold;">Register</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+   
+</body>
+</html>

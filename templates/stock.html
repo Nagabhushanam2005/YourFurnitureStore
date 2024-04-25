@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Product Stocks</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/changes.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: white;">
+
+    <!-- Header -->
+    <jsp:include page="header.jsp" />
+
+    <div class="text-center" style="color: black; font-size: 24px; font-weight: bold; margin-top: 6%;">Stock Products</div>
+    <div class="container-fluid">
+        <div class="table-responsive" style=" margin: 20px 10%; padding: 20px 30px; border: 1px solid black;">
+            <table class="table table-hover table-sm">
+                <thead style="background-color: #222831; color: white; font-size: 18px;">
+                    <tr>
+                        <th>Image</th>
+                        <th>Product ID</th>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Price</th>
+                        <th>Sold Qty</th>
+                        <th>Stock Qty</th>
+                        <th colspan="2" style="text-align: center;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody style="background-color: white; font-size: 16px;">
+                    <!-- Product data will be filled here dynamically -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

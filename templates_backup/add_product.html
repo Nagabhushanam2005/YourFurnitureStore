@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Product</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/changes.css">
+</head>
+<body style="background-color: rgb(230,255,255);">
+
+    <!-- Header-->
+
+    <div class="container">
+        <div class="row" style="margin-top: 50px; margin-left: 4px; margin-right: 4px;">
+            <form id="addProductForm" class="col-md-6 col-md-offset-3" style="border: 2px solid black; border-radius: 10px; background-color: #FFE5CC; padding: 10px;">
+                <div style="font-weight: bold;" class="text-center">
+                    <h2 style="color: rgb(20, 38,38); font-weight : bold ;">Product Addition Form</h2>
+                    <p id="message" style="color: blue;"></p>
+                </div>
+                <div class="row">
+                 
+                    <div class="col-md-6 form-group">
+                        <label for="productName">Product Name</label> 
+                        <input type="text" placeholder="Enter Product Name" name="name" class="form-control" id="productName" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="productType">Product Type</label> 
+                        <select name="type" id="productType" class="form-control" required>
+                            <option value="sofa">SOFA</option>
+                            <option value="Bed">BED</option>
+                            <option value="Dining table">DINING TABLE</option>
+                            <option value="Chair">CHAIR</option>
+                            <option value="Desk">DESK</option>
+                            <option value="Bookcase">BOOK CASE</option>
+                            <option value="Couch">COUCH</option>
+                            <option value="other">Some Other Appliances</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                   
+                    <div class="col-md-6 form-group">
+                        <label for="manufacturer">Manufacturer</label> 
+                        <input type="text" placeholder="Enter Manufacturer" name="manufacturer" class="form-control" id="manufacturer" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="stock">Stock</label> 
+                        <input type="number" placeholder="Enter Stock" name="stock" class="form-control" id="stock" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="price">Price</label> 
+                        <input type="number" placeholder="Enter Price" name="price" class="form-control" id="price" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label for="discount">Discount</label> 
+                        <input type="number" placeholder="Enter Discount" name="discount" class="form-control" id="discount" required>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label for="picture">Picture URL</label> 
+                        <input type="text" placeholder="Enter Picture URL" name="picture" class="form-control" id="picture" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 text-center" style="margin-bottom: 2px;">
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                    </div>
+                    <div class="col-md-6 text-center">
+                        <button type="submit" class="btn btn-success">Add Product</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+
+    <!-- flask  changes chatgpt -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#addProductForm').submit(function(event) {
+                event.preventDefault(); 
+               
+                var productName = $('#productName').val();
+                var productType = $('#productType').val();
+                var productId = $('#productId').val();
+                var manufacturer = $('#manufacturer').val();
+                var stock = $('#stock').val();
+                var price = $('#price').val();
+                var discount = $('#discount').val();
+                var picture = $('#picture').val();
+
+                if (!productName || !productType || !productId || !manufacturer || !stock || !price || !discount || !picture) {
+                    $('#message').text('All fields are required.');
+                    return;
+                }
+
+                this.submit();
+            });
+        });
+    </script>
+</body>
+</html>

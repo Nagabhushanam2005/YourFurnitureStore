@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login & Signup</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/changes.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Function to clear form fields
+            function clearFormFields() {
+                $('#username').val('');  // Clear the username field
+                $('#password').val('');  // Clear the password field
+                $('#usertype').val('customer');  // Set default login type
+            }
+
+            // Call the clearFormFields function when the document is ready
+            clearFormFields();
+
+            // Function to redirect to register page when selecting new user
+            $('#usertype').change(function() {
+                if ($(this).val() === 'newuser') {
+                    window.location.href = '/register'; // Redirect to register page
+                }
+            });
+
+            
+            // Submit form using AJAX
+            $('#loginForm').submit(function(e) {
+                e.preventDefault();
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '/login',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        window.location.href = response.redirect;
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body style="background-image: url(/static/images/Login.jpg); background-size: cover;">
+    <div class="container">
+        <div class="row" style="margin-top: 50px; margin-left: 4px; margin-right: 4px;">
+            <!-- Login Form -->
+            <form id="loginForm" method="post" class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2" style="background-color: white; border-radius:20px;border: 1px solid black; margin-top: 12%; padding: 25px; opacity: 0.8;">
+                <div style="font-weight: bold;" class="text-center">
+                    <h2 style="color: black;font-weight : bold;">Login Form</h2>
+                </div>
+                <div></div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label for="username" style="color: black;">Username</label>
+                        <input type="email" placeholder="Enter Username" name="username" class="form-control" id="username" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label for="password" style="color: black;">Password</label>
+                        <input type="password" placeholder="Enter Password" name="password" class="form-control" id="password" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <label for="usertype" style="color: black;">User Mode</label>
+                        <select name="usertype" id="usertype" class="form-control" required>
+                            <option value="customer" selected>Customer</option>
+                            <option value="admin">Admin</option>
+                            <option value="newuser">Sign Up</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button type="submit" href="/home" class="btn btn-success" style="border: 1px solid black; background-color: green; font-weight: bold;">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Furniture Shopping website</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/changes.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body style="background-color: rgb(230,255,255);">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 text-right mt-3">
+                <a href="/cart_details" class="btn btn-success btn-go-to-cart">Go to Cart</a>
+            </div>
+        </div>
+    </div>
+<!-- Header -->
+<div class="text-center" style="color: black; font-size: 40px; font-weight: bold;" id="message"></div>
+
+<div class="container">
+    <div class="row text-center" id="productList">
+
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        var message = "All Furnitures";
+        var products = [];
+        // values from python
+
+        var values = JSON.parse('{{ values | tojson | safe}}');
+        var val_len = values.length;
+
+        // Fetch products from flask
+        for (var i = 0; i <val_len; i++) {
+            products.push({ prodId: values[i][0], prodName: values[i][1], prodInfo: values[i][2], prodPrice: values[i][3], cartQty: values[i][4] });
+        }
+
+        var search = null;
+        var type = null;
+
+        if (search != null) {
+            message = "Showing Results for '" + search + "'";
+            // Fetch products based on search
+        } else if (type != null) {
+            message = "Showing Results for '" + type + "'";
+            // Fetch products based on type
+        } else {
+            // Fetch all products
+        }
+        if (products.length === 0) {
+            message = "No items found for the search '" + (search != null ? search : type) + "'";
+            // Fetch all products
+        }
+
+        $('#message').text(message);
+        renderProducts(products);
+    });
+
+    // Function to render products
+    function renderProducts(products) {
+        var productListHtml = '';
+        for (var i = 0; i < products.length; i++) {
+            var product = products[i];
+            var cartQty = product.cartQty;
+            var buttonHtml = '';
+            if (cartQty == 0) {
+                buttonHtml = `
+                    <button type="button" onclick="addToCart('${product.prodId}', 1)" class="btn btn-success" >Add to Cart</button>
+                    <button type="button" onclick="addToCart('${product.prodId}', 1)" class="btn btn-primary">Buy Now</button>
+                `;
+            } else {
+                buttonHtml = `
+                    <button type="button" onclick="addToCart('${product.prodId}')" class="btn btn-danger" >Add to Cart</button>
+                    <button type="button" onclick="checkout('${product.prodId}')" class="btn btn-success" >Checkout</button>
+                `;
+            }
+
+            productListHtml += `
+                <div class="col-sm-4" style='height: 350px;'>
+                    <div class="thumbnail">
+                        <img src="./ShowImage?pid=${product.prodId}" alt="Product" style="height: 150px; max-width: 180px">
+                        <p class="productname">${product.prodName}</p>
+                        <p class="productinfo">${product.prodInfo.substring(0, 100)}..</p>
+                        <p class="price">Rs ${product.prodPrice}</p>
+                        <!-- Insert form here -->
+                        <form id="checkoutForm_${product.prodId}" action="/check_out" method="post">
+                            <input type="hidden" name="product_id" value="${product.prodId}">
+                            ${buttonHtml}
+                        </form>
+                        <!-- End of form -->
+                        <br />
+                    </div>
+                </div>
+            `;
+        }
+        $('#productList').html(productListHtml);
+
+        // Add event listener to product elements
+        $('.thumbnail').on('click', function() {
+            // Extract product details from the clicked product element
+            var prodName = $(this).find('.productname').text();
+            var prodInfo = $(this).find('.productinfo').text();
+            var prodPrice = $(this).find('.price').text();
+            console.log("Product Name: " + prodName);
+            console.log("Product Info: " + prodInfo);
+            console.log("Product Price: " + prodPrice);
+        });
+    }
+
+    // Function to add product to cart
+    function addToCart(prodId, qty) {
+        // AJAX call to add product to cart
+        $.ajax({
+            url: '/add_to_cart',
+            type: 'POST',
+            data: JSON.stringify({ 'product_id': prodId }),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(response) {
+                console.log('Product added to cart successfully');
+                // Optionally, you can update the UI to reflect the cart changes
+            },
+            error: function(error) {
+                console.error('Error adding product to cart:', error);
+            }
+        });
+    }
+
+    // Function to proceed to checkout
+    function checkout(prodId) {
+        window.location.href = '/check_out_selected_item?productID='+ prodId;
+    }
+</script>
+
+</body>
+</html>

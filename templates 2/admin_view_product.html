@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Products</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Changed background color */
+            padding-top: 50px;
+        }
+
+        .container {
+            max-width: 1024px;
+            margin: 0 auto;
+        }
+
+        .card {
+            border-radius: 8px; /* Changed border radius */
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+            margin-bottom: 30px;
+            width: 300px; /* Changed card width */
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 15px; /* Changed card padding */
+        }
+
+        .card-title {
+            font-size: 24px; /* Changed title font size */
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 14px; /* Changed text font size */
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            font-size: 16px; /* Changed price font size */
+            color: #333;
+            font-weight: bold;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px; /* Added margin top for spacing */
+        }
+
+        .btn {
+            border-radius: 5px;
+            padding: 8px 16px;
+            font-size: 14px; /* Changed button font size */
+        }
+
+        .btn-danger {
+            background-color: #ff0000; /* Changed danger button color */
+            border-color: #ff0000; /* Changed danger button border color */
+            color: #fff;
+        }
+
+        .btn-danger:hover {
+            background-color: #ff3333; /* Changed hover color for danger button */
+            border-color: #ff3333; /* Changed hover border color for danger button */
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Changed primary button color */
+            border-color: #007bff; /* Changed primary button border color */
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3; /* Changed hover color for primary button */
+            border-color: #0056b3; /* Changed hover border color for primary button */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row" id="productContainer">
+            <!-- Product Cards will be dynamically added here -->
+        </div>
+    </div>
+
+    
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Fetch products from Flask using AJAX
+        // $.ajax({
+        //     url: '/admin_view_product', // Change this URL to your Flask route for fetching products
+        //     type: 'GET',
+        //     dataType: 'json',
+        //     success: function(response) {
+        //         if (response && response.products && response.products.length > 0) {
+        //             displayProducts(response.products);
+        //         } else {
+        //             $('#productContainer').html('<p>No products found.</p>');
+        //         }
+        //     },
+        //     error: function(xhr, status, error) {
+        //         console.error('Error fetching products:', error);
+        //         $('#productContainer').html('<p>Error fetching products.</p>');
+        //     }
+        // });
+        var products = [];
+        var values = JSON.parse('{{ values | tojson | safe}}');
+        var val_len = values.length;
+
+        // Fetch products from flask
+        for (var i = 0; i <val_len; i++) {
+            products.push({
+                productId: values[i][0],
+                productName: values[i][1],
+                productPrice: values[i][2],
+                imageUrl: values[i][3],
+            });
+        }
+
+        // Function to display products
+        function displayProducts(products) {
+            var productContainer = $('#productContainer');
+            productContainer.empty(); // Clear existing products
+
+            // Append products to the container
+            products.forEach(function(product) {
+                var productHtml = '<div class="col-sm-4">' +
+                    '<div class="card">' +
+                    '<img class="card-img-top" src="' + product.imageUrl + '" alt="Product Image">' +
+                    '<div class="card-body">' +
+                    '<h5 class="card-title">' + product.productName + ' (' + product.productId + ')</h5>' +
+                    '<p class="card-text">' + product.productInfo + '</p>' +
+                    '<p class="price">Rs ' + product.productPrice + '</p>' +
+                    '<div class="btn-group">' +
+                    // '<button class="btn btn-danger">Remove Product</button>' +
+                    // '<button class="btn btn-primary">Update Product</button>' +
+                    '<a href="remove_products?id=' + product.productId + '" class="btn btn-danger">Remove Product</a>' +
+                    '<a href="update_product?id=' + product.productId + '" class="btn btn-primary">Update Product</a>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>';
+
+                productContainer.append(productHtml);
+            });
+        }
+        displayProducts(products)
+        // Dummy AJAX request for removing a product (not functional in this example)
+        $('.removeProductBtn').click(function() {
+            var productId = $(this).data('prodid');
+            alert('Removing product with ID: ' + productId);
+          
+        });
+        $('.updateProductBtn').click(function() {
+            var productId = $(this).data('prodid');
+            alert('Redirecting to update product page for ID: ' + productId);
+
+        });
+    });
+</script>
+</body>
+
+</html>

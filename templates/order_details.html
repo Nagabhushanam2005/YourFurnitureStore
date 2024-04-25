@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Order Details</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/changes.css">
+    <script>
+        $(document).ready(function() {
+            // Function to generate dummy order details
+            function generateDummyOrders() {
+                var orders = [
+                    { productId: 1, prodName: 'Product 1', orderId: 'ORD001', qty: 2, amount: 100, time: '2024-03-12', shipped: 0 },
+                    { productId: 2, prodName: 'Product 2', orderId: 'ORD002', qty: 1, amount: 50, time: '2024-03-13', shipped: 1 },
+                    { productId: 3, prodName: 'Product 3', orderId: 'ORD003', qty: 3, amount: 150, time: '2024-03-14', shipped: 0 }
+                ];
+
+                return orders;
+            }
+
+            // Function to display order details
+            function displayOrderDetails() {
+                var orders = generateDummyOrders();
+                var tableBody = $('#orderTableBody');
+
+                // Clear existing table rows
+                tableBody.empty();
+
+                // Iterate through orders and append rows to the table
+                $.each(orders, function(index, order) {
+                    var row = $('<tr>');
+                    row.append('<td><img src="./ShowImage?pid=' + order.productId + '" style="width: 50px; height: 50px;"></td>');
+                    row.append('<td>' + order.prodName + '</td>');
+                    row.append('<td>' + order.orderId + '</td>');
+                    row.append('<td>' + order.qty + '</td>');
+                    row.append('<td>' + order.amount + '</td>');
+                    row.append('<td>' + order.time + '</td>');
+                    row.append('<td class="text-success">' + (order.shipped === 0 ? 'ORDER_PLACED' : 'ORDER_SHIPPED') + '</td>');
+                    tableBody.append(row);
+                });
+            }
+
+            // Call the function to initially load order details
+            displayOrderDetails();
+        });
+    </script>
+</head>
+<body style="background-color: white">
+    <div class="text-center" style="color: black; font-size: 24px; font-weight: bold; margin-top: 6%;">Order Details</div>
+
+    <div class="container">
+        <div class="table-responsive" style=" margin: 20px 10%; padding: 20px 30px; border: 1px solid black;">
+            <table class="table table-hover table-sm">
+                <thead style="background-color: #222831; color: white; font-size: 15px; font-weight: bold;">
+                    <tr>
+                        <th>Picture</th>
+                        <th>Product Name</th>
+                        <th>Order Id</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="orderTableBody" style="background-color: white; font-size: 13px; font-weight: bold;">
+                    <!-- Table body will be populated dynamically using JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+   
+</body>
+</html>

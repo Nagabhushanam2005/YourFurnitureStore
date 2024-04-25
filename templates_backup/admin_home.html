@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/changes.css">
+    <style>
+        body {
+            background-color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 3px solid #ffcc00;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            
+        }
+
+        nav ul li a:hover {
+            background-color: #555;
+        }
+
+        .container {
+            max-width: 960px;
+            margin: auto;
+            flex: 1;
+            padding: 70px;
+            
+        }
+
+        .products {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            background-color: #f6e6d5;
+        }
+
+        .products .tab {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .products .tab button {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: lightblue;
+            color: #333;
+            border: none;
+            cursor: pointer;
+            min-width: 150px;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+
+        .products .tab button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Welcome to Admin Panel</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/admin_logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Product actions -->
+    <div class="container">
+        <div class="products">
+            <div class="tab">
+                <button type="button" onclick="viewProducts()" href="/view_products">View Products</button>
+                <button type="button" onclick="addProduct()" href="/add_product">Add Products</button>
+                <button type="button" onclick="removeProducts()" href="/remove_product">Remove Products</button>
+                <button type="button" onclick="updateProducts()" href="/update_product">Update Products</button>
+                <button type="button" onclick="shippedProducts()" href="/shipped">Shipped Products</button>
+                <button type="button" onclick="unshippedProducts()" href="/unshipped">Unshipped Products</button>
+                <button type="button" onclick="returnedProducts()" href="/returned">Returned Products</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <!-- Footer content goes here -->
+    </footer>
+
+    <script>
+        // Functions to navigate to different pages
+        function viewProducts() {
+            window.location.href = "admin_view_product";
+        }
+
+        function addProduct() {
+            window.location.href = "add_product";
+        }
+
+        function removeProducts() {
+            window.location.href = "remove_products";
+        }
+
+        function updateProducts() {
+            window.location.href = "update_product";
+        }
+
+        function shippedProducts() {
+            window.location.href = "shipped";
+        }
+
+        function unshippedProducts() {
+            window.location.href = "unshipped";
+        }
+
+        function returnedProducts() {
+            window.location.href = "returned_products";
+        }
+    </script>
+
+</body>
+
+</html>

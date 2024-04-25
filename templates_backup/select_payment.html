@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Payment Option</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: rgb(230, 255, 255);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        .container {
+            background-color: rgb(255, 230, 230);
+            padding: 60px; /* Increased padding */
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border: 2px solid black; /* Added black border */
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: #33cc99;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2ea890;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Select Payment Option</h1>
+        <form id="paymentForm" method="post" onsubmit="return redirectToPayment()">
+            <div class="form-group">
+                <label for="creditCard">
+                    <input type="radio" id="creditCard" name="paymentMethod" value="creditCard"> Credit Card
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="debitCard">
+                    <input type="radio" id="debitCard" name="paymentMethod" value="debitCard"> Debit Card
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="upi">
+                    <input type="radio" id="upi" name="paymentMethod" value="upi"> UPI
+                </label>
+            </div>
+            <button type="submit">Proceed</button>
+        </form>
+    </div>
+
+    <script>
+        function redirectToPayment() {
+            var paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+            if (paymentMethod) {
+                var paymentValue = paymentMethod.value;
+                switch (paymentValue) {
+                    case 'creditCard':
+                        window.location.href = 'payment_credit';
+                        break;
+                    case 'debitCard':
+                        window.location.href = 'payment_debit';
+                        break;
+                    case 'upi':
+                        window.location.href = 'payment_upi';
+                        break;
+                    default:
+                        alert('Please select a payment method.');
+                        return false; 
+                }
+            } else {
+                alert('Please select a payment method.');
+                return false; 
+            }
+            return false; 
+        }
+    </script>
+</body>
+
+</html>
