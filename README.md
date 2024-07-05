@@ -1,6 +1,4 @@
-# Flask Project
 
-This is a simple Flask project.
 
 ## Installation
 
@@ -10,9 +8,13 @@ To get started with this project, you need to install Flask. Follow the steps be
 
 - Python (Make sure Python is installed on your system. You can download it from [python.org](https://www.python.org/downloads/))
 
-### Run this command to Install Flask(if not installed)
+### Requirements
+To install Flask
 ```
 pip install flask
+```
+
+
 
 
    
