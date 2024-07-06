@@ -1,4 +1,4 @@
-## Team
+## Team Members
 <details>
    <summary>Details</summary>
    
